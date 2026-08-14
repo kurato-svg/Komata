@@ -37,7 +37,9 @@ kotlin {
 }
 
 dependencies {
-    val composeBom = platform("androidx.compose:compose-bom:2026.08.00")
+    // Keep Komata on the API 36 compatible Compose line.
+    // Compose 1.12.x requires compileSdk 37 and AGP 9+.
+    val composeBom = platform("androidx.compose:compose-bom:2026.06.00")
 
     implementation(composeBom)
     androidTestImplementation(composeBom)
