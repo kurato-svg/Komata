@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ fun HomeScreen(
     providerName: String,
     manga: List<MangaSummary>,
     onOpenManga: (String) -> Unit,
+    onOpenExtensions: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -37,37 +39,29 @@ fun HomeScreen(
                 title = {
                     Column {
                         Text("Komata", fontWeight = FontWeight.Bold)
-                        Text(
-                            text = providerName,
-                            style = MaterialTheme.typography.labelSmall,
-                        )
+                        Text(text = providerName, style = MaterialTheme.typography.labelSmall)
                     }
+                },
+                actions = {
+                    TextButton(onClick = onOpenExtensions) { Text("Extensions") }
                 },
             )
         },
     ) { padding ->
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 150.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
+            modifier = Modifier.fillMaxSize().padding(padding),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             items(manga, key = { it.id }) { item ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onOpenManga(item.id) },
-                ) {
+                Card(modifier = Modifier.fillMaxWidth().clickable { onOpenManga(item.id) }) {
                     Column {
                         KomataImage(
                             image = item.poster,
                             contentDescription = item.title,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(2f / 3f),
+                            modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f),
                         )
                         Text(
                             text = item.title,
